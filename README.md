@@ -80,28 +80,34 @@ We didn't actually need `cat` for this, and could have passed the file to `grep`
 - `pbcopy`: (macOS Only) "Pasteboard Copy": Copies to the system clipboard
 - `pbpaste`: (macOS Only) "Pasteboard Paste": Pastes clipboard into terminal for further processing/display
 
-## Rot13/Caesar Cypher
+## Rot-13/Caesar Cypher
+
+"Rot-13" (short for "Rotate by 13") is a simple "Caesar Cypher" where each letter is swapped with the one 13 character away. It definitely shouldn't be used for security purposes, but can be a fun way to hide spoilers when talking about movies/books/etc. in social media.
+
+Using `tr` this is very easy to do — each letter in the first group is swapped with the same-index letter in the second group.
 
 - `echo Tarrant Hightopp | tr "abcdefghijklmnopqrstuvwxyz" "nopqrstuvwxyzabcdefghijklm"`
 - `echo Tarrant Hightopp | tr "[A-Za-z]" "[N-ZA-Mn-za-m]"`
+- `pbpaste | tr "[A-Za-z]" "[N-ZA-Mn-za-m]" | pbcopy` takes the current clipboard, transforms it, and copies it back to the clipboard for pasting into emails and chat windows.
 
 ## Sum the expense column
 
-Starting with:
-
-```
-food,13.67,McDonalds
-food,37.34,Wagiu Steak
-gas,50.00,
-hotel,597.12,the fancy one
-```
-
-Any of these commands will work:
+For a CSV ("comma-separated values") file with a column of numbers that needs to be summed, we can use a couple short commands to get the numbers column, join it into an equation, and feed it to the `bc` command.
 
 - `cat files/expenses.csv | cut -d, -f2 | paste -sd+ - | bc`
 
 ## One final command: `curl`
 
-`curl` isn't scarry, but it does have more complexity than we can explore here.
+`curl` isn't scary, but it does have more complexity than we can explore here. As you gain more experience in web development, you might work with other devs that test API endpoints using it. It allows for "reading" data from a service, and "creating", "updating", and "deleting" data on the service.
+
+The simplest version looks like this:
+
+- `curl https://www.gutenberg.org/cache/epub/11/pg11.txt` to get the "Alice in Wonderland" text
+
+That could also be piped to our other commands. So, instead of using the included "alice.txt" file, we could have done this:
+
+- `curl https://www.gutenberg.org/cache/epub/11/pg11.txt | grep -E -o "[A-Za-z0-9]+" | sort | uniq | wc -l` to see how many unique words are in the book
 
 ## Final notes
+
+There are over 1000 commands available in the terminal. It's impossible to know all of them, but being aware of just the small handful we've looked at — and how to join them for more complex functions, might be useful in your future work.
