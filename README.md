@@ -71,10 +71,9 @@ We didn't actually need `cat` for this, and could have passed the file to `grep`
 ## Other commands to explore later
 
 - `tr`: "transform": changes characters in input to other characters
-- `cut`: "cut out" selected portions of each line of input
-- `rev`: reverse strings. "abc" becomes "cba"
+- `cut`: "cut out" selected portions of each line of input. Kind of like "split"
+- `paste`: merges lines of input. Kind of like "join"
 - `bc`: "basic calculator". takes a string of numbers and operators (+,-,\*,/) and returns the value
-- `paste`: merges lines of input
 - `cal`: displays months in text form
 - `date`: displays date. can also be used to display relative date in past or future
 - `uptime`: displays last time your computer was restarted
@@ -101,38 +100,8 @@ Any of these commands will work:
 
 - `cat files/expenses.csv | cut -d, -f2 | paste -sd+ - | bc`
 
-```
-cat expenses.txt | cut -d, -f2 | tr -s "\n" "+" | rev | cut -c2- | rev | bc
-
-Or
-
-cat expenses.txt | cut -d, -f2 | tr -s "\n" "+" | sed "s/\+$//" | bc
-
-Or
-
-cat expenses.txt | sed "/^$/ d" | cut -d, -f2 | paste -sd+ - | bc
-
-Or
-
-echo $(cat expenses.txt | cut -d, -f2 | sed -E '/^$/d' | tr -s "\n" "+")0 | bc
-
-Or
-
-math=$(cat expenses.txt | cut -d, -f2 | sed -E '/^$/d' | tr -s "\n" "+")0; bc -e $math
-
-Or
-
-echo $(($(cat expenses.txt | cut -d, -f2 | sed -E '/^$/d' | tr -s "\n" "+")0))
-
-Or
-
-total=0;for num in $(cat expenses.txt | cut -d, -f2); do total=$(($total+$num)); done;echo $total
-```
-
 ## One final command: `curl`
 
 `curl` isn't scarry, but it does have more complexity than we can explore here.
 
 ## Final notes
-
-- The scripts in this project have some other commands you can explore. They also show how the project was built (definitely not "create folder/file" in Finder), how to move files in terminal, and how to do a few other tasks.
