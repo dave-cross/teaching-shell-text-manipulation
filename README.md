@@ -1,4 +1,4 @@
-# Learning to navigate in the command line
+# Learning to get and modify text with the command line
 
 This project is to help learners get comfortable with working with text in the command line.
 
